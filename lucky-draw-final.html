@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Lucky Draw Result - Al Arab</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- App icon -->
+  <l  ink rel="icon" type="image/png" href="./app_icon.png" />
+
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+      /* Import Google font - Poppins */
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+    body { 
+      align-items: center;
+      /* padding: 0 10px; */
+      justify-content: center;
+      min-height: 100vh;
+      background: #25a5d0;
+    }
+    
+    .layout{
+      display: grid;
+      margin: 50px 0;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      justify-content: center;
+    }
+    
+    @media (max-width: 800px) {
+      .layout {
+        grid-template-columns: repeat(1, minmax(0, 1fr));}
+      .wrapper {
+        width: 90%;
+        margin: 0 auto;
+      }
+    }
+    
+    .wrapper {
+      width: 92%;
+      height: 540px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+      justify-self: center;
+    }
+    .wrapper header {
+      display: flex;
+      align-items: center;
+      padding: 25px 30px 10px;
+      justify-content: space-between;
+    }
+    header .icons {
+      display: flex; 
+    }
+    header .icons span {
+      height: 38px;
+      width: 38px;
+      margin: 0 1px;
+      cursor: pointer;
+      text-align: center;
+      line-height: 38px;
+      font-size: 1.9rem;
+      user-select: none;
+      border-radius: 50%;
+    }
+    
+    .material-symbols-rounded{
+      
+      color: #000;
+    }
+    .icons span:last-child {
+      margin-right: -10px;
+    }
+    
+    header .current-date {
+      font-size: 1.45rem;
+      font-weight: 500;
+    }
+    .calendar {
+      padding: 20px;
+    }
+    .calendar ul {
+      display: flex;
+      flex-wrap: wrap;
+      list-style: none;
+      text-align: center;
+    }
+    .calendar .days {
+      margin-bottom: 20px;
+    }
+    .calendar li {
+      color: #333;
+      width: calc(100% / 7);
+      font-size: 1.07rem;
+    }
+    .calendar .weeks li {
+      font-weight: 500;
+      cursor: default;
+    }
+    .calendar .days li {
+      z-index: 1;
+      cursor: pointer;
+      position: relative;
+      margin-top: 30px;
+    }
+    .days li.inactive {
+      color: #aaa;
+    }
+    .days li.active {
+      color: #fff;
+    }
+    .days li::before {
+      position: absolute;
+      content: "";
+      left: 50%;
+      top: 50%;
+      height: 40px;
+      width: 40px;
+      z-index: -1;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .days li.active::before {
+      background: #25a5d0;
+    }
+    .days li:not(.active):hover::before {
+      background: #f2f2f2;
+    }
+    
+    .card-section {
+      /* margin-top: 20px; */
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      /* align-items: center; */
+      justify-content: center;
+      overflow: auto;
+    }
+    
+    .card {
+      background-color: #f9f9f9;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      margin-bottom: 10px;
+    }
+    
+    .card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+    
+    .card ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .card li {
+      margin-bottom: 5px;
+    }
+    
+    .loader {
+      border: 5px solid #f3f3f3; /* Light grey */
+      border-top: 5px solid #3498db; /* Blue */
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+    
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    
+    
+    /* Style for the footer */
+    .footer {
+      background-color: #000; /* Change the background color as needed */
+      color: #fff; /* Change the text color as needed */
+      padding: 15px; /* Adjust padding as needed */
+      text-align: center; /* Center the text */
+    }
+    
+    /* Style for the footer text */
+    .footer-text {
+      margin: 0; /* Remove default margin */
+    }
+    
+    /* Style for the header */
+    .header {
+      background-color: #000; /* Change the background color as needed */
+      color: #000; /* Change the text color as needed */
+      padding: 18px; /* Adjust padding as needed */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    /* Style for the logo */
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo-img {
+      width: 50px; /* Adjust logo width as needed */
+      height: 50px; /* Adjust logo height as needed */
+      margin-right: 10px; /* Adjust margin as needed */
+    }
+    
+    .logo-text {
+      margin: 0; /* Remove default margin */
+      color: #fff; /* Change text color as needed */
+      
+    }
+    
+    /* Style for the navigation menu */
+    .nav-menu {
+      list-style: none; /* Remove default list style */
+      padding: 0; /* Remove default padding */
+    }
+    
+    .nav-item {
+      display: inline-block; /* Display items horizontally */
+      margin-right: 20px; /* Adjust margin between items as needed */
+    }
+    
+    .nav-item:last-child {
+      margin-right: 0; /* Remove margin from last item */
+    }
+    
+    .nav-toggle {
+      padding: 5px
+    }
+    
+    .nav-item a {
+      text-decoration: none; /* Remove underline from links */
+      color: #fff; /* Change link color as needed */
+    }
+    
+    @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
+    body{
+      font-family: 'Lato';
+    }
+    img{
+      max-width: 100%;
+    }
+    .caption{
+      position: absolute;
+      top:50%;
+      left:8rem;
+      z-index: 9;
+      transform: translateY(-50%);
+      opacity:0;
+      transition: 500ms ease opacity, 500ms ease transform;
+      transform: translateY(60px);
+      &.current-caption{
+        transition-delay: 1000ms;
+        opacity:1;
+        transform: translateY(0);
+      }
+      &.previous-caption{
+        transform: translateY(-60px);
+      }
+      .caption-heading{
+        transition: 500ms ease-in all;
+        color: white;
+      }
+      .caption-heading h1{
+        font-size: 4rem;
+        margin-bottom:1.5rem;
+        text-transform: uppercase;
+        text-indent: -0.2rem;
+        letter-spacing: .2rem;
+        font-weight: 300;
+        
+      }
+      .caption-subhead{
+        font-size:1rem;
+        font-weight: 300;
+        text-transform: uppercase;
+        color: white;
+         /* // color: #909590; */
+        letter-spacing: 4px;
+        word-spacing: .1rem;
+        margin-bottom: 2.5rem;
+        display:block;
+      }
+      a.btn{
+        color: #333;
+        font-size: 0.8rem;
+        text-decoration: none;
+        background-color: white;
+        padding: .5rem 1rem;
+        text-transform: uppercase;
+        letter-spacing: .2rem;
+        position:relative;
+        z-index:9;
+        transition: 250ms ease-in background-color, 500ms ease-in color;
+        &:hover{
+          background-color: black;
+          color: white;
+        }
+        /* // word-spacing: rem; */
+      }
+    }
+    .container{
+      
+      width:100%;
+      height: 100vh;
+      background-color: #2C302E;
+      display:flex;
+      position: relative;
+      
+    }
+    .left-col, .right-col{
+      width: 100%;
+      box-sizing: border-box;
+      height: calc(100% - 4rem);
+      overflow:hidden;
+    }
+    .left-col{
+      background-size: cover;
+      background-postion: center top;
+      overflow: hidden;
+      margin: 2rem;
+      position: relative;
+      .slide{
+        filter: grayscale(100%);
+        position:absolute;
+        width: 100%;
+        height: 100%;
+        background-position:  left top !important;
+        background-size: cover !important;
+        background-repeat:no-repeat;
+        opacity:0;
+        transition: 1000ms cubic-bezier(1.000, 0.040, 0.355, 1.000) transform, 1000ms cubic-bezier(0.680, -0.550, 0.265, 1.550) clip-path;
+        transform:translateY(-100%); scale: 1;
+        z-index: -1;
+       
+        &.previous{
+          z-index:1;
+          opacity:1;
+          transform: translateY(0);
+          animation-delay: 1s;
+          clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+          transition:3s ease transform;
+          will-change: transform;
+    
+          &.change{
+            transform: translateY(50%);
+          }
+        }
+        &.next{
+          transform: translateY(-100%);
+          z-index:3;
+          opacity:1;
+          clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
+        }
+        &.current{
+          opacity:1;
+           transform:translateY(0) scale(1.25);
+          z-index:2;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        }
+        
+      }
+    }
+    .right-col{
+      display:flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .right-col .preview{
+      max-width:400px;
+      
+    }
+    
+    .nav{
+      display: block;
+      position:absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 6;
+      overflow: hidden;
+      /* // pointer-events:none; */
+      a{
+        color: rgba(250,250,250,1);
+        font-size: 3rem;
+        text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+      }
+      &:hover{
+        
+        .slide-up, .slide-down{
+          opacity: .5;
+          transform: translateX(0);
+        }
+        .slide-up{
+        }
+      }
+      .slide-up, .slide-down{
+        display:block;
+        position:absolute;
+        text-align:center;
+        padding:1rem;
+        opacity: 0;
+        transition: .25s ease opacity,.25s ease transform;
+        z-index:99;
+        &:hover{
+          opacity: 1;
+        }
+        a{
+          text-decoration:none;
+          font-weight: 300 !important;
+    
+        }
+        
+      }
+      .slide-up{
+        top:50%;
+        left:0;
+        transform: translateX(-100%);
+      }
+      .slide-down{
+        top:50%;
+        right:0;
+        transform: translateX(100%);
+      }
+      
+    }
+    
+    </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <img src="./app_icon.png" alt="Company Logo" class="logo-img">
+      <h2 class="logo-text">Al Arab</h2>
+    </div>
+    <nav class="navbar">
+      <button class="nav-toggle" aria-label="toggle navigation">
+        <h3>Download</h3>
+      </button>
+    </nav>
+  </header>
+
+
+  <div class="container" id="container">
+    <div class="caption" id="slider-caption">
+      <div class="caption-heading">
+        <h1>Lorem Ipsum</h1>
+      </div>
+      <div class="caption-subhead"><span>dolor sit amet, consectetur adipiscing elit. </span></div><a class="btn"
+        href="#">Sit Amet</a>
+    </div>
+    <div class="left-col" id="left-col">
+      <div id="left-slider"></div>
+    </div>
+    <ul class="nav">
+      <li class="slide-up"> <a href="#"></a></li>
+      <li class="slide-down"> <a id="down_button" href="#">></a></li>
+    </ul>
+  </div>
+  <a style="
+    position: fixed;
+    z-index: 1000;
+    bottom: 30px;
+    right: 30px;
+  " href="https://drive.google.com/drive/folders/1d_kG4LabXLe3Oe2D_KB1L8XxCB4m8HnQ" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Android_robot.svg/100px-Android_robot.svg.png"
+      alt="Android Icon" width="50px" height="50px" />
+  </a>
+  <div class="layout">
+    <div class="wrapper">
+      <div style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 4px;
+          background-color: black;
+          border-radius: 5px;
+        ">
+
+        <img src="./app_icon.png" alt="Android Icon" width="50px" height="50px" />
+      </div>
+
+      <header>
+        <p class="current-date"></p>
+        <div class="icons">
+          <span id="prev" style="color: black;" class="material-symbols-rounded">⬅</span>
+          <span id="next" class="material-symbols-rounded">➡</span>
+        </div>
+      </header>
+      <div class="calendar">
+        <ul class="weeks">
+          <li>Sun</li>
+          <li>Mon</li>
+          <li>Tue</li>
+          <li>Wed</li>
+          <li>Thu</li>
+          <li>Fri</li>
+          <li>Sat</li>
+        </ul>
+        <ul class="days"></ul>
+      </div>
+    </div>
+
+    <section class="card-section wrapper">
+      <h3 class="card">Fetch DAta</h3>
+    </section>
+  </div>
+  <footer class="footer">
+    <p class="footer-text">Copyright © 2024 Al-Arab All Rights Reserved</p>
+  </footer>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+  <script type="module">
+    const daysTag = document.querySelector(".days"),
+      currentDate = document.querySelector(".current-date"),
+      prevNextIcon = document.querySelectorAll(".icons span");
+
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCyMgcSa3gGgNBhDbKy_vqAv459znHUlc4",
+      authDomain: "al-arab-180e4.firebaseapp.com",
+      projectId: "al-arab-180e4",
+      storageBucket: "al-arab-180e4.appspot.com",
+      messagingSenderId: "556209592086",
+      appId: "1:556209592086:web:970e91e3ebd1a8a7956237",
+      measurementId: "G-ZQZ9HN31NV",
+    };
+
+    // Utils
+    function formatDate(dateString) {
+      const parts = dateString.split("-");
+      const day = parts[2].padStart(2, "0"); // Ensure two digits with leading zeros
+      const month = parts[1].padStart(2, "0"); // Ensure two digits with leading zeros
+      const formattedDate = ${day}-${month}-${parts[0]};
+      return formattedDate;
+    }
+
+    function renderCards(records, selectedDate, currentDate) {
+      const cardSection = document.querySelector(".card-section");
+      cardSection.innerHTML = ""; // Clear previous cards
+      if (records.length === 0) {
+        let message = '';
+        if (selectedDate.toDateString() === currentDate.toDateString()) {
+          message = 'Todays result not announced'
+        } else {
+          message = 'No records found';
+        }
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.innerHTML = `
+          <h2>${message}</h2>
+        `;
+        cardSection.appendChild(card);
+      } else {
+        records.forEach((record, index) => {
+          const card = document.createElement("div");
+          card.classList.add("card");
+
+          const h2 = document.createElement("h2");
+          h2.textContent = record.result.time;
+          card.appendChild(h2);
+          const list = document.createElement("ul");
+          record.dayResults.forEach((data) => {
+            const listItem = document.createElement("li");
+            const timestamp = new Date(data.timeStamp.seconds * 1000); // Convert timestamp to Date object
+            listItem.textContent = ${data.name} - ${data.result_value}; // Display name, result value, and timestamp
+            list.appendChild(listItem);
+          });
+
+          card.appendChild(list);
+          cardSection.appendChild(card);
+        });
+      }
+    }
+
+    function showLoader() {
+      const loader = document.createElement("div");
+      // remove .card-section and add loader
+      document.querySelector(".card-section").innerHTML = "";
+      loader.classList.add("loader");
+      document.querySelector(".card-section").appendChild(loader);
+    }
+
+    // Function to hide loader
+    function hideLoader() {
+      const loader = document.querySelector(".loader");
+      if (loader) {
+        loader.remove();
+      }
+    }
+
+    firebase.initializeApp(firebaseConfig);
+    let db = firebase.firestore();
+
+    function GetAllDataOnce2(date) {
+      const formatdate = formatDate(date);
+
+      return new Promise((resolve, reject) => {
+        const records = [];
+        const resultRef = db.collection("record").doc(formatdate).collection("result");
+
+        resultRef.get()
+          .then((resultSnapshot) => {
+            const promises = [];
+
+            resultSnapshot.forEach((resultDoc) => {
+              const resultData = resultDoc.data();
+              const resultId = resultDoc.id;
+              const dayResultRef = resultRef.doc(resultId).collection("dayResult").orderBy("timeStamp", "asc");
+
+              const dayResultPromise = dayResultRef.get()
+                .then((dayResultSnapshot) => {
+                  const dayResults = [];
+
+                  dayResultSnapshot.forEach((dayResultDoc) => {
+                    dayResults.push(dayResultDoc.data());
+                  });
+
+                  return dayResults;
+                });
+
+              promises.push(dayResultPromise);
+
+              promises.push(dayResultPromise.then((dayResults) => {
+                records.push({
+                  result: resultData,
+                  dayResults: dayResults
+                });
+              }));
+            });
+
+            Promise.all(promises)
+              .then(() => {
+                resolve(records);
+              })
+              .catch((error) => {
+                console.error("Error fetching data:", error);
+                reject(error);
+              });
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+            reject(error);
+          });
+      });
+    }
+
+    function GetAllDataOnce(date) {
+      const formatdate = formatDate(date);
+
+      return new Promise((resolve, reject) => {
+        const records = [];
+        const subcollectionRef = db
+          .collection("record")
+          .doc(formatdate)
+          .collection("result");
+
+        subcollectionRef
+          .get()
+          .then((subcollectionSnapshot) => {
+            const promises = [];
+            console.log("subcollectionSnapshot", subcollectionSnapshot)
+            subcollectionSnapshot.forEach((subDoc, index) => {
+              const subData = [];
+              const subSubcollectionRef = subcollectionRef
+                .doc(subDoc.id)
+                .collection("dayResult").orderBy("timeStamp", "asc");
+
+              const promise = subSubcollectionRef
+                .get()
+                .then((subSubcollectionSnapshot) => {
+                  subSubcollectionSnapshot.forEach((subSubDoc) => {
+                    subData.push(subSubDoc.data());
+                  });
+                  records.push({ data: subData });
+                })
+                .catch((error) => {
+                  console.error(
+                    "Error getting sub-subcollection documents: ",
+                    error
+                  );
+                });
+
+              promises.push(promise);
+            });
+
+            Promise.all(promises)
+              .then(() => {
+                resolve(records);
+              })
+              .catch((error) => {
+                console.error(
+                  "Error getting subcollection documents: ",
+                  error
+                );
+                reject(error);
+              });
+          })
+          .catch((error) => {
+            console.error("Error getting subcollection documents: ", error);
+            reject(error);
+          });
+      });
+    }
+
+    // getting new date, current year and month
+    let date = new Date(),
+      currYear = date.getFullYear(),
+      currMonth = date.getMonth(),
+      currDay = date.getDate();
+
+    let selectedYear = currYear, selectedMonth = currMonth, selectedDay = currDay;
+
+    // storing full name of all months in array
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    const renderCalendar = () => {
+      let firstDayofMonth = new Date(currYear, currMonth, 1).getDay(),
+        lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(),
+        lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay(),
+        lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate();
+      let liTag = "";
+
+      for (let i = firstDayofMonth; i > 0; i--) {
+        liTag += <li class="inactive">${lastDateofLastMonth - i + 1}</li>;
+      }
+      for (let i = 1; i <= lastDateofMonth; i++) {
+        let isToday =
+          i === selectedDay &&
+            currMonth === selectedMonth &&
+            currYear === selectedYear
+            ? "active"
+            : "";
+        liTag += <li class="${isToday}" data-date="${i}">${i}</li>;
+      }
+
+      for (let i = lastDayofMonth; i < 6; i++) {
+        liTag += <li class="inactive">${i - lastDayofMonth + 1}</li>;
+      }
+      currentDate.innerText = ${months[currMonth]} ${currYear};
+      daysTag.innerHTML = liTag;
+
+      // Attach event listener to each day
+      document.querySelectorAll(".days li").forEach((day) => {
+        day.addEventListener("click", () => {
+
+          const selectedDate = new Date(currYear, currMonth, day.dataset.date);
+          selectedYear = selectedDate.getFullYear(),
+            selectedMonth = selectedDate.getMonth(),
+            selectedDay = selectedDate.getDate();
+          const currentDate = new Date();
+          if (selectedDate > currentDate) {
+            return;
+          }
+          if (day.classList.contains("inactive")) return;
+          showLoader();
+
+          document.querySelectorAll(".days li.active").forEach((activeDay) => {
+            activeDay.classList.remove("active");
+          });
+          day.classList.add("active");
+
+          GetAllDataOnce2(${currYear}-${currMonth + 1}-${day.dataset.date}).then((records) => {
+            records.sort((a, b) => {
+              return b.result.time.localeCompare(a.result.time);
+            });
+ 
+            hideLoader();
+            renderCards(records, selectedDate, currentDate);
+          });
+
+          // GetAllDataOnce(${currYear}-${currMonth + 1}-${day.dataset.date}).then((records) => {
+          //   console.log("records", records)
+          // });
+        });
+      });
+
+    };
+    renderCalendar();
+
+
+
+
+    prevNextIcon.forEach((icon) => {
+      // getting prev and next icons
+      icon.addEventListener("click", () => {
+        // adding click event on both icons
+        // if clicked icon is previous icon then decrement current month by 1 else increment it by 1
+        currMonth = icon.id === "prev" ? currMonth - 1 : currMonth + 1;
+
+        if (currMonth < 0 || currMonth > 11) {
+          // if current month is less than 0 or greater than 11
+          // creating a new date of current year & month and pass it as date value
+          date = new Date(currYear, currMonth, new Date().getDate());
+          currYear = date.getFullYear(); // updating current year with new date year
+          currMonth = date.getMonth(); // updating current month with new date month
+        } else {
+          date = new Date(); // pass the current date as date value
+        }
+        renderCalendar(); // calling renderCalendar function
+      });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const liTagWithDate = document.querySelector(li[data-date="${currDay}"]);
+      if (liTagWithDate) {
+        liTagWithDate.classList.add("active");
+      }
+      liTagWithDate.click();
+    });
+
+    let slide_data = [
+      {
+        'src': 'https://images.unsplash.com/photo-1506765336936-bb05e7e06295?ixlib=rb-0.3.5&s=d40582dbbbb66c7e0812854374194c2e&auto=format&fit=crop&w=1050&q=80',
+        'title': 'Slide 1',
+        'copy': 'DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT.'
+      },
+      {
+        'src': 'https://images.unsplash.com/photo-1496309732348-3627f3f040ee?ixlib=rb-0.3.5&s=4d04f3d5a488db4031d90f5a1fbba42d&auto=format&fit=crop&w=1050&q=80',
+        'title': 'Slide 2',
+        'copy': 'DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT.'
+      },
+      {
+        'src': 'https://images.unsplash.com/photo-1504271863819-d279190bf871?ixlib=rb-0.3.5&s=7a2b986d405a04b3f9be2e56b2be40dc&auto=format&fit=crop&w=334&q=80',
+        'title': 'Slide 3',
+        'copy': 'DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT.'
+      },
+      {
+        'src': 'https://images.unsplash.com/photo-1478728073286-db190d3d8ce6?ixlib=rb-0.3.5&s=87131a6b538ed72b25d9e0fc4bf8df5b&auto=format&fit=crop&w=1050&q=80',
+        'title': 'Slide 4',
+        'copy': 'DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT.'
+      },
+
+    ];
+    let slides = [],
+      captions = [];
+
+    let autoplay = setInterval(function () {
+      nextSlide();
+    }, 5000);
+    let container = document.getElementById('container');
+    let leftSlider = document.getElementById('left-col');
+    // console.log(leftSlider);
+    let down_button = document.getElementById('down_button');
+    // let caption = document.getElementById('slider-caption');
+    // let caption_heading = caption.querySelector('caption-heading');
+
+    down_button.addEventListener('click', function (e) {
+      e.preventDefault();
+      clearInterval(autoplay);
+      nextSlide();
+      autoplay;
+    });
+
+    for (let i = 0; i < slide_data.length; i++) {
+      let slide = document.createElement('div'),
+        caption = document.createElement('div'),
+        slide_title = document.createElement('div');
+
+      slide.classList.add('slide');
+      slide.setAttribute('style', 'background:url(' + slide_data[i].src + ')');
+      caption.classList.add('caption');
+      slide_title.classList.add('caption-heading');
+      slide_title.innerHTML = '<h1>' + slide_data[i].title + '</h1>';
+
+      switch (i) {
+        case 0:
+          slide.classList.add('current');
+          caption.classList.add('current-caption');
+          break;
+        case 1:
+          slide.classList.add('next');
+          caption.classList.add('next-caption');
+          break;
+        case slide_data.length - 1:
+          slide.classList.add('previous');
+          caption.classList.add('previous-caption');
+          break;
+        default:
+          break;
+      }
+      caption.appendChild(slide_title);
+      caption.insertAdjacentHTML('beforeend', '<div class="caption-subhead"><span>dolor sit amet, consectetur adipiscing elit. </span></div>');
+      slides.push(slide);
+      captions.push(caption);
+      leftSlider.appendChild(slide);
+      container.appendChild(caption);
+    }
+    // console.log(slides);
+
+    function nextSlide() {
+      // caption.classList.add('offscreen');
+
+      slides[0].classList.remove('current');
+      slides[0].classList.add('previous', 'change');
+      slides[1].classList.remove('next');
+      slides[1].classList.add('current');
+      slides[2].classList.add('next');
+      let last = slides.length - 1;
+      slides[last].classList.remove('previous');
+
+      captions[0].classList.remove('current-caption');
+      captions[0].classList.add('previous-caption', 'change');
+      captions[1].classList.remove('next-caption');
+      captions[1].classList.add('current-caption');
+      captions[2].classList.add('next-caption');
+      let last_caption = captions.length - 1;
+
+      // console.log(last);
+      captions[last].classList.remove('previous-caption');
+
+      let placeholder = slides.shift();
+      let captions_placeholder = captions.shift();
+      slides.push(placeholder);
+      captions.push(captions_placeholder);
+    }
+
+    let heading = document.querySelector('.caption-heading');
+
+
+    // https://jonsuh.com/blog/detect-the-end-of-css-animations-and-transitions-with-javascript/
+    function whichTransitionEvent() {
+      var t,
+        el = document.createElement("fakeelement");
+
+      var transitions = {
+        "transition": "transitionend",
+        "OTransition": "oTransitionEnd",
+        "MozTransition": "transitionend",
+        "WebkitTransition": "webkitTransitionEnd"
+      }
+
+      for (t in transitions) {
+        if (el.style[t] !== undefined) {
+          return transitions[t];
+        }
+      }
+    }
+
+    var transitionEvent = whichTransitionEvent()
+    caption.addEventListener(transitionEvent, customFunction);
+
+    function customFunction(event) {
+      caption.removeEventListener(transitionEvent, customFunction);
+      console.log('animation ended');
+
+      // Do something when the transition ends
+    }
+
+
+
+
+
+  </script>
+</body>
+
+</html>
